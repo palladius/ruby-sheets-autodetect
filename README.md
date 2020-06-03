@@ -31,14 +31,14 @@ All you need to do is two things:
 
     $ bundle install # for gems. Easy peasy
 
-    create a Service Account and name it like the json.dist (without .dist). Should look similar to the dist with some random strings. That SvcAcct needs to be able to read your spreadsheet
+    Create a Service Account and name it like the json.dist (without .dist). Should look similar to the dist with some random strings. That SvcAcct needs to be able to read your spreadsheet
+
+Some docs for task 2: https://github.com/juampynr/google-spreadsheet-reader and 
 
 ## Notes
 
-Library I'm using to get Spreado values into ruby:
-
-Docs: 
-https://www.rubydoc.info/github/gimite/google-drive-ruby/GoogleDrive/Spreadsheet#add_worksheet-instance_method (awesome!)
+* Library I'm using to get Spreado values into ruby: https://www.rubydoc.info/github/gimite/google-drive-ruby/GoogleDrive/Spreadsheet#add_worksheet-instance_method (awesome!)
+* I've used `money` gem to import Currency as money class (internet says I should use BigDecmal so I do). My dream
 
 # problems
 
@@ -64,6 +64,12 @@ These are rails types (different from Ruby types, at times, eg with Booleans):
 
 for text, we can use the STRLEN (like: >15 is TEXT below 15 is string. Just an idea.)
 
-## Thanks
+## TODOs
 
-* `gimite` for the `Sheets` gem.
+* P1 infer String vs Text
+* P2 import data into Fixtures, with right types.
+* P3 create a script that launches rails generate and rake db:migrate, maybe allowing you to customize, like create proper singularization for your tabs or allowing you to adjust values.
+
+## Credits
+
+*  Hiroshi Ichikawa (`gimite`) for the `Sheets`/`GoogleDrive` gem. More credits: https://www.rubydoc.info/github/gimite/google-drive-ruby/GoogleDrive
