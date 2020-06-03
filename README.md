@@ -3,7 +3,7 @@
 This library tries to auto-detect Spreadsheet cells (using manual rudimentary inference! Hence totally error prone!) and autodetect 
 
 
-## TLDR
+## TL;DR
 
 Given a spreadsheet with a tab "Cars" and these values:
 
@@ -14,6 +14,24 @@ Given a spreadsheet with a tab "Cars" and these values:
 It will generate this string (note: still work in progress to detect Text vs String):
 
     rails generate scaffold Car name:Text description:Text issportscar:Boolean brand:Text modello:Text dob:Text num_wheels:Integer discordanti:Text colore:Text
+
+## Visual TL;DR
+
+From:
+
+![Input Data](https://raw.githubusercontent.com/palladius/ruby-sheets-autodetect/master/images/Source%20Data%20(one%20tab).png)
+
+To:
+
+![Ouput Data](https://raw.githubusercontent.com/palladius/ruby-sheets-autodetect/master/images/Output%20data%20(one%20line%20per%20tab).png)
+
+## Install
+
+All you need to do is two things:
+
+    $ bundle install # for gems. Easy peasy
+
+    create a Service Account and name it like the json.dist (without .dist). Should look similar to the dist with some random strings. That SvcAcct needs to be able to read your spreadsheet
 
 ## Notes
 
