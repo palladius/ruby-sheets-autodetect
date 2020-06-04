@@ -133,7 +133,7 @@ def main
   # first time and save it to config.json file for later usages.
   # See this document to learn how to create config.json:
   # https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md
-  session = GoogleDrive::Session.from_config("credentials.json")
+  session = GoogleDrive::Session.from_config("aj-config.json")
 
   if (ARGV[0]) 
     $trix_id = ARGV[0]
