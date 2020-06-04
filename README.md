@@ -19,7 +19,6 @@ It will generate this string (note: still work in progress to detect Text vs Str
 
 ![Ouput Data](https://raw.githubusercontent.com/palladius/ruby-sheets-autodetect/master/images/Output%20data%20(one%20line%20per%20tab).png)
 
-
 ## Install
 
 All you need to do is two things:
@@ -27,6 +26,8 @@ All you need to do is two things:
 * `$ bundle install` for gems. Easy peasy.
 
 * Create a Service Account and name it like the json.dist (without .dist). Should look similar to the dist with some random strings. That SvcAcct needs to be able to read your spreadsheet.  Some docs for task 2: https://github.com/juampynr/google-spreadsheet-reader and https://stackoverflow.com/questions/27764544/rails-export-data-in-google-spreadsheet and https://stackoverflow.com/questions/50376820/how-do-i-authorize-a-service-account-for-google-calendar-api-in-ruby
+
+`google-drive-ruby` provides a good auth link too: https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md
 
 ## Notes
 
