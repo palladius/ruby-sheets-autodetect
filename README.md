@@ -58,16 +58,16 @@ These are rails types (different from Ruby types, at times, eg with Booleans):
     (*) boolean # for TrueClass and FalseClass
     binary
     (*) string
-    (*) text    # Still need to change class to be able to distinguish between String and Text
+    (*) text    
     (*) date
     (*) time
     (*) datetime
 
-for text, we can use the STRLEN (like: >15 is TEXT below 15 is string. Just an idea.)
+Note: for text/string discrimination, it uses a simple algorithm (# of strings above 10chars - if >30% then TEXT ). Note I dont want to use majority since empty strings count as 'short' and i wanted to keep it simple.
 
 ## TODOs
 
-* P1 infer String vs Text
+* [DONE] P1 infer String vs Text
 * P2 import data into Fixtures, with right types.
 * P3 create a script that launches rails generate and rake db:migrate, maybe allowing you to customize, like create proper singularization for your tabs or allowing you to adjust values.
 

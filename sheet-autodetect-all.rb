@@ -94,11 +94,19 @@ def dump_all_cells(ws)
   end
 end
 
-def inferColTypeByColumn(colname, arr, verbose=false)
+def inferColTypeByColumn(colname, arr, verbose=true)
   ret = TypeDetector.autocast_array(arr)
   print "#DEB# ret: #{ret} for #{arr}\n" if verbose
   winner = ret[:class]
   p "#DEB# Winner '#{winner}' for '#{colname}'. Accuracy: #{ret[:accuracy]}. Notes: #{ret[:notes]}\n" if verbose
+  if ret[:class] == :TextOrString
+    puts yellow("DEB TEXT: #{arr}")
+    # num of strings longer than 10 / 
+    n_long_strings = (arr.map{|x| x.length > 10}.group_by{|e| e}.map{|k, v| [k, v.length]}.to_h.fetch(true,0)) * 1.0 / arr.length # rescue 0
+    text_or_string =  n_long_strings > 0.3 ? :Text : :String  # 30% of long strings is enough for TEXT   # otherwise return STRING
+    puts "arr = #{arr}; percent of long strings: #{yellow(n_long_strings * 100)}. Verdict: #{yellow text_or_string}"
+    return text_or_string
+  end
   return ret[:class]
 end
 
@@ -113,7 +121,7 @@ def inspectSchemaByTabAndPopulateSchemaRow(ws)
     col_values = (0..(ws.num_rows-2)).map{ |i| ws.list[i][colname] } # -2: array is 0..-1 and first is title :)
     col_type = inferColTypeByColumn(colname, col_values) # rescue "dunno"
     print "#DEB# column values for '#{colname}': #{col_values}. TYPE=#{col_type}\n"
-    railsGenString += " #{modelNameCleanup(ws[1, col])}:#{col_type}"
+    railsGenString += " #{modelNameCleanup(ws[1, col])}:#{col_type.downcase()}"
   end
   return railsGenString
 end

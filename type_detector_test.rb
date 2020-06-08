@@ -4,6 +4,11 @@ TestValues = %w{12012 1233.22 12:21:22 10/10/2009 Test 0CHF True false 1000CHF 2
 TestTwo =  ["TRUE", "FALSE", "FALSE", false, "", "v", "4", "4", "1"]
 TestNonString =  [true, 1,2,3, 4.0, "False"]
 
+ShouldBe = [
+    [29/12/1976 19:00:00", "DateTime"]
+    [29/12/1976", "Date"]
+]
+
 def test_some_values(test_values)
     puts "\n1a. Magic mini-lib from SO and elaborated by Ricc with currencies"
     test_values.each do |str|

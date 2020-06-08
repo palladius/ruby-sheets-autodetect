@@ -20,12 +20,12 @@ end
 
 class TypeDetector
   @@default_arr_limit = 9
-  @@verbose = false
+  @@verbose = true
 
 =begin
   https://api.rubyonrails.org/classes/ActiveRecord/Type.html
 
-  transform String -> string
+  transform String -> string (simbol)
 =end
 
   def self.ruby_class_to_rails_class(cls)
@@ -38,7 +38,7 @@ class TypeDetector
         Time => :Time,
         DateTime => :DateTime,
         Money => :Decimal,
-        String => :Text,
+        String => :TextOrString, # TBD
     }
     p "ERR Unknown Type: #{cls}\n" unless cls.in?(mega_map.keys)
     return mega_map[cls] || "Dunno#{cls}".parameterize.underscore.to_sym()
@@ -82,6 +82,11 @@ end
         ret = most_occurrent_class
         accuracy =  max_count(arr_classes)*100.0 / arr_classes.count
         notes = "Majority computed with: #{h}. Accuracy: #{accuracy}"
+        if ret == 'Text'
+          puts "Lets now try to solve the dilemma: String vs Text TODO(ricc)\n"
+          print "Arr: #{arr}\n"
+
+        end
         return {
             class: ret,
             notes: notes,
