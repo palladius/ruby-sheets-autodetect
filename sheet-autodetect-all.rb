@@ -5,6 +5,8 @@
 # Colors: https://www.rubydoc.info/github/gimite/google-drive-ruby/GoogleDrive/Worksheet/Colors
 # dark orange: Google::Apis::SheetsV4::Color.new(red: 0.9, green: 0.569, blue: 0.22)
 
+require 'rubygems'
+require 'bundler'
 
 require "google_drive"
 require "socket"

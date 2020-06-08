@@ -29,6 +29,13 @@ All you need to do is two things:
 
 `google-drive-ruby` provides a good auth link too: https://github.com/gimite/google-drive-ruby/blob/master/doc/authorization.md
 
+## Run
+
+After you install gems and Service Account, you can go on and use the script:
+
+* Create a Google Spreadsheet and note the URL. from it, note the last part of URL (like `1pWqRWW3qhPfzjdmN0_D9Cz_D3fi0qv_fb1z2NeckSt8`)
+* Call the script in its magnificense, like: `ruby sheet-autodetect-all.rb 1pWqRWW3qhPfzjdmN0_D9Cz_D3fi0qv_fb1z2NeckSt8`
+
 ## Notes
 
 * Library I'm using to get Spreado values into ruby: https://www.rubydoc.info/github/gimite/google-drive-ruby/GoogleDrive/Spreadsheet#add_worksheet-instance_method (awesome!)

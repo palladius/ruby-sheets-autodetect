@@ -1,4 +1,5 @@
 
+# Riccardo test Spreadsheet. Call this script with a sheet you own. See README.
 crunch-test-spreadsheet:
 	ruby sheet-autodetect-all.rb 1pWqRWW3qhPfzjdmN0_D9Cz_D3fi0qv_fb1z2NeckSt8 
 
