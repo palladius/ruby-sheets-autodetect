@@ -12,12 +12,20 @@ require "google_drive"
 require "socket"
 require "rails"
 require_relative "type_detector"
+require_relative "sheets_rails_generator"
 
 VERSION = "1.3"
 $schema_tab_name = "_schema_v#{VERSION}_"
 $trix_id = nil 
 $schema_ws = nil
 
+def yellow(str)
+  "\033[1;33m#{str}\033[0m"
+end
+
+def gsheet_url(id)
+  "https://docs.google.com/spreadsheets/d/#{id}/edit"
+end
 
 def appendToRow(ws, row_number, arr, opts={})
   print "appendToRow(#{ws.title},#{row_number},arr=#{arr})\n"
@@ -64,7 +72,7 @@ def modelNameCleanup(str)
   str.gsub(/[^a-zA-Z ]/,"").downcase().gsub(" ","_")
 end
 
-def addToSchemaWsRelevantInfo(ix, ws, schema_ws)
+def addToSchemaWsRelevantInfo(ix, ws, schema_ws, ric_sheet)
   #print "addToSchemaWsRelevantInfo( #{ix}, #{ws.title}, #{schema_ws.title})\n" 
   schemaCommand = inspectSchemaByTabAndPopulateSchemaRow(ws)
   model_name = ws.title.downcase().singularize()
@@ -74,7 +82,7 @@ def addToSchemaWsRelevantInfo(ix, ws, schema_ws)
     ix+2, # TODO(ricc): put 2 instead in prod. starts from 2: 1 is schema, 2 is a test
     [ix, ws.title, model_name, schemaCommand, notes ] 
   )
-
+  ric_sheet.addWorksheetModel(schemaCommand)
 end
 
 def dump_all_cells(ws)
@@ -146,8 +154,12 @@ def main
   # https://docs.google.com/spreadsheet/ccc?key=pz7XtlQC-PYx-jrVMJErTcg
   # Or https://docs.google.com/a/someone.com/spreadsheets/d/pz7XtlQC-PYx-jrVMJErTcg/edit?usp=drive_web
   trix = session.spreadsheet_by_key($trix_id)
+  trix_title = trix.title
+  ric_sheet = SheetsRailsGenerator.new(trix)
+  print "RicSheet: #{ric_sheet}"
   #ws = trix.worksheets[0]
   my_worksheet_tabs = session.spreadsheet_by_key($trix_id).worksheets
+  print "Trix URL: open ", yellow(gsheet_url($trix_id)), " ..\n"
   p "my_worksheet_tabs: #{my_worksheet_tabs}"
 
   tab_titles = my_worksheet_tabs.map{|ws| ws.title }
@@ -167,27 +179,11 @@ def main
   ix = 0
   my_worksheet_tabs.select{|ws| ws.title =~ /^[A-Z]/ }.each{|ws| 
     #print_worksheet_headers(ws, "generic model (must start with capital letter)")
-    #print "Title(#{ws.title}) Matcha? #{ws.title =~ /^[A-Z]/}\n"
-    #print inspectSchemaByTabAndPopulateSchemaRow(ws)
-    #addSchemaWorksheet(ws)
-    addToSchemaWsRelevantInfo(ix, ws, $schema_ws)
+    addToSchemaWsRelevantInfo(ix, ws, $schema_ws, ric_sheet)
     ix +=1 
   }
+  print yellow("Rails Trix: #{ric_sheet}")
 
-  #print "ws[2,1]: ", ws[2, 1]  #==> "hoge"  # Gets content of A2 cell.
-  #p "B2: ", ws.cell_name_to_row_col("B2")
-
-
-  # Changes content of cells.
-  # Changes are not sent to the server until you call ws.save().
-
-  #dump_all_cells(ws)
-
-  # Yet another way to do so.
-  #p ws.rows  #==> [["fuga", ""], ["foo", "bar]]
-
-  # Reloads the worksheet to get changes by other clients.
-  #ws.reload
 end
 
 main
